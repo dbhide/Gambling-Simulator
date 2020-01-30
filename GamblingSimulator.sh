@@ -1,6 +1,9 @@
 #!/bin/bash -x
 
 echo "Welcome to Gambling Simulation Problem"
+
+declare -A dailyDeal
+
 #Constants
 STAKE=100
 BET=1
@@ -34,7 +37,12 @@ function obtainTotalAmount() {
 	for(( i=1; i<=NUMBER_OF_DAYS; i++ ))
 	do
 		totalAmount=$(( totalAmount + $(calculativeGambler) ))
+		dailyDeal[Day $i]=$totalAmount
 	done
+
+	echo ${!dailyDeal[@]}
+	echo ${dailyDeal[@]}
+
 	if [[ $totalAmount -gt 0 ]]
 	then
 		echo "Total Amount Won = $totalAmount "
