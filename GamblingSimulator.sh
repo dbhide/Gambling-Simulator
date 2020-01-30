@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 echo "Welcome to Gambling Simulation Problem"
 
@@ -51,8 +51,6 @@ function obtainTotalAmount() {
 	fi
 }
 
-obtainTotalAmount
-
 function checkLuck() {
 	for j in ${!dailyDeal[@]}
 	do
@@ -60,5 +58,21 @@ function checkLuck() {
 	done | sort -k2 -rn
 }
 
-echo "Lucky Day is " $(checkLuck | head -1)
-echo "Unlucky Day is " $(checkLuck | tail -1)
+function nextPlay() {
+	while [[ $totalAmount -gt 0 ]]
+	do
+		read -p "Would you like to Play next month? [Y/N]" choice
+		if [ $choice == "Y" ]
+		then
+			obtainTotalAmount
+			echo "Lucky Day is " $(checkLuck | head -1)
+			echo "Unlucky Day is " $(checkLuck | tail -1)
+			nextPlay
+		fi
+		break
+	done
+	echo "OOPS!! Not enough amount..Can't play next Month"
+}
+
+obtainTotalAmount
+nextPlay
