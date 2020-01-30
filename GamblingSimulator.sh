@@ -37,7 +37,7 @@ function obtainTotalAmount() {
 	for(( i=1; i<=NUMBER_OF_DAYS; i++ ))
 	do
 		totalAmount=$(( totalAmount + $(calculativeGambler) ))
-		dailyDeal[Day $i]=$totalAmount
+		dailyDeal[Day$i]=$totalAmount
 	done
 
 	echo ${!dailyDeal[@]}
@@ -52,3 +52,13 @@ function obtainTotalAmount() {
 }
 
 obtainTotalAmount
+
+function checkLuck() {
+	for j in ${!dailyDeal[@]}
+	do
+		echo "$j  ${dailyDeal[$j]}"
+	done | sort -k2 -rn
+}
+
+echo "Lucky Day is " $(checkLuck | head -1)
+echo "Unlucky Day is " $(checkLuck | tail -1)
